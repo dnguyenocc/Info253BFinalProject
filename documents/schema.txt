@@ -1,0 +1,13 @@
+CREATE TABLE documents (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    title VARCHAR(200) NOT NULL,
+    content VARCHAR(200) NOT NULL,
+    last_modified TIMESTAMP DEFAULT NOW(),
+    PRIMARY KEY (id)
+);
+
+
+CREATE TABLE relationship (
+    folder_id int,
+    document_id int,
+);
