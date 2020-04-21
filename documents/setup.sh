@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Creating a new network for my webserver container and my mysql database container
 docker network create my-network
 

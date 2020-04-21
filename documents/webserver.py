@@ -60,6 +60,7 @@ def get_all_documents():
     return json.dumps(response), 200
 
 
+#2. Get a document content
 @app.route('/v1/documents/<id>', methods=['GET'])
 def get_content(id):
     cursor = get_db_connection()
@@ -76,24 +77,6 @@ def get_content(id):
         response["title"] = row[0]
         response['content'] = row[1]
         return json.dumps(response), 200
-
-
-#2. Get a document content
-@app.route('/v1/documents/<id>/spell_check', methods=['GET'])
-def spell_check(id):
-    cursor = get_db_connection()
-    sql_get_query = "SELECT content from documents WHERE id = %s"
-    rows = cursor.execute(sql_get_query, [id])
-    if rows > 0:
-        data = cursor.fetchall()
-    else:
-        response = {'error': "There is no document at that id"}
-        return json.dumps(response), 404
-
-    data = {'text': str(data[0][0])}
-    response_api = requests.post(endpoint, headers=headers, params=params, data=data)
-    json_response = response_api.json()
-    return json.dumps(json_response, indent=4)
 
 
 ##3. Get a spell check for a document
