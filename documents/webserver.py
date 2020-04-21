@@ -108,19 +108,19 @@ def put(id):
     data = request.get_json()
     new_title = data['title']
     new_content = data['content']
-    new_folder_id = data['folder_id']
+    # new_folder_id = data['folder_id']
 
     if data is None:
         return json.dumps(None)
     else:
-        sql_get_query = "SELECT * from tasks WHERE id = %s"
-        row_count = cursor.execute(sql_get_query, id)
+        sql_get_query = "SELECT * from documents WHERE id = %s"
+        row_count = cursor.execute(sql_get_query, [id])
         if row_count > 0:
-            sql_put_query = "UPDATE documents SET title = %s, content = %s, folder_id = %s WHERE id = %s"
-            cursor.execute(sql_put_query, [new_title, new_content, new_folder_id, id])
+            sql_put_query = "UPDATE documents SET title = %s, content = %s WHERE id = %s"
+            cursor.execute(sql_put_query, [new_title, new_content, id])
             return json.dumps("Success"), 204
         else:
-            response = {'error': 'There is no task at that id'}
+            response = {'error': 'There is no document at that id'}
             return json.dumps(response), 404
 
 
@@ -128,8 +128,8 @@ def put(id):
 @app.route('/v1/documents/<id>', methods = ['DELETE'])
 def delete_document(id):
     cursor = get_db_connection()
-    sql_delete_query = "DELETE FROM tasks WHERE id = %s"
-    cursor.execute(sql_delete_query, id)
+    sql_delete_query = "DELETE FROM documents WHERE id = %s"
+    cursor.execute(sql_delete_query, [id])
     return json.dumps("Success"), 204
 
 
