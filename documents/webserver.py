@@ -154,6 +154,7 @@ def delete_document(id):
 
 
 #8 NLP using IBM API
+#https://www.ibm.com/cloud/watson-natural-language-understanding
 @app.route('/v1/documents/<id>/analyze', methods=['GET'])
 def analyze(id):
     cursor = get_db_connection()
