@@ -3,7 +3,11 @@ import json
 app = Flask(__name__)
 import requests
 import MySQLdb
+from ibm_watson import NaturalLanguageUnderstandingV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions
 
+#Azure API
 api_key = "b4831cbb0cad4cf2b0e78abbbfda8e5d"
 endpoint = "https://info253.cognitiveservices.azure.com/bing/v7.0/spellcheck"
 params = {
@@ -15,6 +19,17 @@ headers = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Ocp-Apim-Subscription-Key': api_key,
     }
+
+
+#IBM API
+
+authenticator = IAMAuthenticator('GO9rlymCQcmv9QP7yZW2_YVGTi1v9C7tZnVK_1_SyA52')
+natural_language_understanding = NaturalLanguageUnderstandingV1(
+    version='2019-07-12',
+    authenticator=authenticator
+)
+
+natural_language_understanding.set_service_url('https://api.us-south.natural-language-understanding.watson.cloud.ibm.com/instances/46f58ada-84c3-4c16-bceb-3d0ee1cae13f')
 
 cursor = None
 def get_db_connection():
@@ -135,3 +150,26 @@ def delete_document(id):
 
 #7. Get multiple documents
 #TODO
+
+
+
+#8 NLP using IBM API
+@app.route('/v1/documents/<id>/analyze', methods=['GET'])
+def analyze(id):
+    cursor = get_db_connection()
+    sql_get_query = "SELECT content from documents WHERE id = %s"
+    rows = cursor.execute(sql_get_query, [id])
+    if rows > 0:
+        data = cursor.fetchall()
+    else:
+        response = {'error': "There is no document at that id"}
+        return json.dumps(response), 404
+
+    content = {'text': str(data[0][0])}
+    response = natural_language_understanding.analyze(
+        text=content['text'],
+        features=Features(
+            entities=EntitiesOptions(emotion=True, sentiment=True, limit=2),
+            keywords=KeywordsOptions(emotion=True, sentiment=True,
+                                     limit=2))).get_result()
+    return json.dumps(response, indent=4)
