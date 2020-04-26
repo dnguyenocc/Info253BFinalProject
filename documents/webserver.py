@@ -150,7 +150,7 @@ def process_a_document(id, stop_word):
     if rows > 0:
         data = cursor.fetchall()
         content = str(data[0][0])
-        file_w = file_worker.FileWorker(content, stop_word)
+        file_w = file_worker.FileWorker(content, int(stop_word))
         top_25_words = file_w.get_top_25_words()
         column = ['id', 'top_25_words']
         res_data = dict(zip(column, [id, top_25_words]))

@@ -61,7 +61,10 @@ def get_documents(id):
     doc_ids = list()
     for row in data:
         doc_ids.append(row[1])
-    return Response(json.dumps(doc_ids), status=200, mimetype='application/json')
+
+    response = dict()
+    response['id'] = doc_ids
+    return Response(json.dumps(response), status=200, mimetype='application/json')
 
 
 @app.route('/v1/folders/<id>', methods=['PUT'])

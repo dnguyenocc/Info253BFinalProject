@@ -26,7 +26,6 @@ from nltk.corpus import stopwords
 class FileWorker:
     lemmatizer = WordNetLemmatizer()
     stop_word_list = set(stopwords.words('english'))
-
     '''
         each file_worker contains:
         @param original_text: the content before processing
@@ -75,7 +74,7 @@ class FileWorker:
         '''
         return a new word list which does not contains stopword
         '''
-        return [word for word in word_list if not word in self.stop_word_list]
+        return [word for word in word_list if word not in self.stop_word_list]
 
 
 
