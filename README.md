@@ -1,4 +1,4 @@
-# Design Docs for Info 253b project
+# Design Docs for Info 253B project
 
 ## Build and Run
 ### 1. Database container
@@ -72,13 +72,13 @@ GET /v1/documents/<id>/spell_check
 GET /v1/documents/<id>/word_count/<stop_word>
 ```
 #### Input
-```json
+```
 {
     "stop_word": 0 for false, 1 for true
 }
 ```
 #### Output
-```json
+```
 {
     "id":
     "word_count": []
@@ -91,7 +91,7 @@ PUT /v1/documents/<id>
 ```
 
 #### Input
-```json
+```
 {
     "title": optional
     "text": optional
@@ -99,7 +99,7 @@ PUT /v1/documents/<id>
 }
 ```
 #### Output
-```json
+```
 {
     success
 }
@@ -110,7 +110,7 @@ PUT /v1/documents/<id>
 DELETE /v1/documents/<id>
 ```
 #### Output
-```json
+```
 Success
 ```
 
@@ -119,43 +119,43 @@ Success
 GET /v1/documents/
 ```
 #### Input
-```json
+```
     "id": [id1, id2]
 ```
 
 #### Output
-```json
+```
     "result": [
-    {
-    "title": optional
-    "text": optional
-    "folder_id": optional
-    },
-    {
-    "title": optional
-    "text": optional
-    "folder_id": optional
-    }
+        {
+            "title": optional
+            "text": optional
+            "folder_id": optional
+        },
+        {
+            "title": optional
+            "text": optional
+            "folder_id": optional
+        }
     ]
 ```
 
 
 ## Folders API
 ### 1. Create a folder
-```json
+```
 POST /v1/folders/
 ```
 #### Input
-```json
+```
     "name":
 ```
 #### Output
-```json
+```
     "id": 
 ```
 
 ### 2. Add a documents to folder
-```json
+```
     POST /v1/folders/<id>/add_document
 ```
 #### Input
@@ -178,7 +178,6 @@ GET /v1/folders/<id>
 #### Output
 ```
 {
-    
     document_ids: [id1, id2, id3]
 }
 ```
@@ -209,16 +208,16 @@ Success
 GET /v1/folders/
 ```
 #### Output
-```json
+```
 {
     result: [
         {
-        "name": 
-        "id": 
+            "name": 
+            "id": 
         },
         {
-        "name": 
-        "id":
+            "name": 
+            "id":
         }
     ]
 }
