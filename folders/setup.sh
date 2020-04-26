@@ -11,3 +11,5 @@ docker rm folders_api
 
 docker build -t folders_api_image .
 docker run  -dit --name=folders_api -e FLASK_APP=webserver.py -p 5001:5001 --network my-network folders_api_image
+
+docker logs -f folders_api
