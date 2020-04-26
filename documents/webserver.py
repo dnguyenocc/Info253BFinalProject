@@ -63,11 +63,13 @@ def create_document():
     cursor.execute(sql, [title, content])
     new_document_id = cursor.lastrowid
 
-    # insert into relationhip
+    # insert into relationship
     folder_id = 1
     if "folder_id" in data:
-        folder_id = data["folder_id"]
+        folder_id = int(data["folder_id"])
+        print(folder_id)
 
+    print("new_document_id, folder_id", (new_document_id, folder_id))
     sql = f"INSERT INTO contains (document_id, folder_id) VALUES (%s, %s);"
     cursor.execute(sql, [new_document_id, folder_id])
 
