@@ -22,7 +22,6 @@ headers = {
 
 
 #IBM API
-
 authenticator = IAMAuthenticator('GO9rlymCQcmv9QP7yZW2_YVGTi1v9C7tZnVK_1_SyA52')
 natural_language_understanding = NaturalLanguageUnderstandingV1(
     version='2019-07-12',
@@ -55,6 +54,11 @@ def create_document():
     else:
         status_code = 400
         resp = Response("Error", status=status_code)
+
+
+    ## 1. GET document_id from documents SQL
+    ## 2. INSERT folder_id to contains databases
+
     return resp
 
 
@@ -131,6 +135,8 @@ def put(id):
         sql_get_query = "SELECT * from documents WHERE id = %s"
         row_count = cursor.execute(sql_get_query, [id])
         if row_count > 0:
+            #TODO
+            # change folder_id
             sql_put_query = "UPDATE documents SET title = %s, content = %s WHERE id = %s"
             cursor.execute(sql_put_query, [new_title, new_content, id])
             return json.dumps("Success"), 204
@@ -145,6 +151,9 @@ def delete_document(id):
     cursor = get_db_connection()
     sql_delete_query = "DELETE FROM documents WHERE id = %s"
     cursor.execute(sql_delete_query, [id])
+
+    #TODO
+    #delete folder_id ....
     return json.dumps("Success"), 204
 
 

@@ -6,8 +6,3 @@ CREATE TABLE documents (
     PRIMARY KEY (id)
 );
 
-
-CREATE TABLE relationship (
-    folder_id int,
-    document_id int,
-);
