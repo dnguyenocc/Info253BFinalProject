@@ -1,4 +1,4 @@
-# Design Docs for Info 253b project
+# Design Docs for Info 253B project
 
 ## Build and Run
 ### 1. Database container
@@ -93,8 +93,8 @@ PUT /v1/documents/<id>
 #### Input
 ```json
 {
-    "title": optional
-    "text": optional
+    "title": optional,
+    "text": optional,
     "folder_id": optional
 }
 ```
@@ -127,13 +127,13 @@ GET /v1/documents/
 ```json
     "result": [
     {
-    "title": optional
-    "text": optional
+    "title": optional,
+    "text": optional,
     "folder_id": optional
     },
     {
-    "title": optional
-    "text": optional
+    "title": optional,
+    "text": optional,
     "folder_id": optional
     }
     ]
