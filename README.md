@@ -1,5 +1,27 @@
 # Design Docs for Info 253b project
 
+## Build and Run
+### 1. Database container
+```
+cd database
+chmod +x setup.sh
+./setup.sh
+```
+
+```
+We need to run each command in the file `initialize_db` to seed the db
+```
+### 2. Dcouments APIs
+```
+cd documents
+chmod +x setup.sh
+./setup.sh
+```
+### 3. Folder APIs
+```
+TODO
+```
+
 ## Documents API
 ### 1. Create a new document
 ```json
@@ -9,7 +31,7 @@ POST /v1/documents/
 ```
 {
     "title": 
-    "text":
+    "content":
     "folder_id": optional
 }
 ```
@@ -47,7 +69,7 @@ GET /v1/documents/<id>/spell_check
 
 ### 4. Word counts
 ```
-GET /v1/documents/<id>/word_count 
+GET /v1/documents/<id>/word_count/<stop_word>
 ```
 #### Input
 ```json
