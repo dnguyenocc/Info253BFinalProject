@@ -12,7 +12,7 @@ def get_db_connection():
     global db
 
     if not cursor:
-        db = MySQLdb.connect("some-mysql", "root", "my-secret-pw", "df")
+        db = MySQLdb.connect("some-mysql", "root", "my-secret-pw", "demo")
         cursor = db.cursor()
 
     return cursor
