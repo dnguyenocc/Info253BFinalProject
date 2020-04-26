@@ -1,5 +1,6 @@
 from flask import Flask, request, Response
 import json
+
 app = Flask(__name__)
 
 import MySQLdb
@@ -7,17 +8,19 @@ import MySQLdb
 cursor = None
 db = None
 
+
 def get_db_connection():
     global cursor
     global db
 
     if not cursor:
-        db = MySQLdb.connect("some-mysql", "root", "my-secret-pw", "df")
+        db = MySQLdb.connect("some-mysql", "root", "my-secret-pw", "demo")
         cursor = db.cursor()
 
     return cursor
 
-@app.route('/v1/folders', methods = ['POST'])
+
+@app.route('/v1/folders', methods=['POST'])
 def create_folder():
     data = request.get_json()
     sql = f"INSERT INTO folders (title) VALUES (%s)"
@@ -33,6 +36,7 @@ def create_folder():
         resp = Response("Error", status=400)
     return resp
 
+
 @app.route('/v1/folders/<id>/add_document', methods=['POST'])
 def add_doc_to_folder(id):
     data = request.get_json()
@@ -47,6 +51,7 @@ def add_doc_to_folder(id):
         resp = Response("Error", status=400)
     return resp
 
+
 @app.route('/v1/folders/<id>', methods=['GET'])
 def get_documents(id):
     sql = f"SELECT * FROM contains WHERE folder_id=(%s)"
@@ -57,7 +62,8 @@ def get_documents(id):
     for row in data:
         doc_ids.append(row[1])
     return Response(json.dumps(doc_ids), status=200, mimetype='application/json')
-    
+
+
 @app.route('/v1/folders/<id>', methods=['PUT'])
 def edit_folder(id):
     data = request.get_json()
@@ -72,6 +78,7 @@ def edit_folder(id):
         resp = Response("Error", status=400)
     return resp
 
+
 @app.route('/v1/folders/<id>', methods=['DELETE'])
 def delete_folder(id):
     sql2 = f"DELETE FROM folders WHERE id=(%s)"
@@ -81,6 +88,7 @@ def delete_folder(id):
     cursor.execute(sql2, [id])
     db.commit()
     return Response(json.dumps("Success"), status=201, mimetype='application/json')
+
 
 @app.route('/v1/folders', methods=['GET'])
 def get_folders():
@@ -92,4 +100,3 @@ def get_folders():
     for row in data:
         folders_list.append({"name": row[1], "id": row[0]})
     return Response(json.dumps({"result": folders_list}), status=200, mimetype='application/json')
-
